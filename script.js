@@ -93,50 +93,115 @@ sliders.forEach(s => {
 async function generateDeck() {
   const cards = await loadCards();
 
-  // Get slider values (random if 0)
+  // Get slider values (0 means random)
   let rarities = {
-    common: getCommon(),
-    rare: getRare(),
-    epic: getEpic(),
-    legendary: getLegendary(),
-    champion: getChampion() > 1 ? 1 : getChampion(),
+    common: getSliderValue('commonRange'),
+    rare: getSliderValue('rareRange'),
+    epic: getSliderValue('epicRange'),
+    legendary: getSliderValue('legendaryRange'),
+    champion: getSliderValue('championRange') > 1 ? 1 : getSliderValue('championRange'),
   };
 
+  const totalSet = Object.values(rarities).reduce((a, b) => a + b, 0);
+
+  let deck = [];
+  let usedIds = new Set();
+
+  // If all sliders are 0, pick 8 random cards
+  if (totalSet === 0) {
+    let tries = 0, avg = 0, targetElixir = parseFloat(document.getElementById('elixirRange').value);
+    let useTarget = targetElixir > 0;
+    do {
+      deck = pickRandom(cards, maxCards);
+      avg = deck.length > 0 ? (deck.reduce((sum, c) => sum + c.elixir, 0) / deck.length) : 0;
+      tries++;
+      if (!useTarget) break;
+    } while (useTarget && Math.abs(avg - targetElixir) > 0.2 && tries < 1000);
+
+    if (useTarget && Math.abs(avg - targetElixir) > 0.2) {
+      showError(`Couldn't match target elixir (${targetElixir}) after 1000 tries.`);
+      document.getElementById("deck").innerHTML = "";
+      document.getElementById("avgElixir").textContent = "";
+      let oldBtn = document.getElementById("launchBtn");
+      if (oldBtn) oldBtn.remove();
+      return;
+    } else {
+      showError('');
+    }
+    renderDeck(deck, avg);
+    return;
+  }
+
+  // If some sliders are set, fill those first, then fill up to 8 with random cards
+  for (const [rarity, count] of Object.entries(rarities)) {
+    if (count > 0) {
+      const pool = cards.filter(c => c.rarity === rarity && !usedIds.has(c.id));
+      if (pool.length < count) {
+        showError(`Not enough ${rarity} cards to fill your selection.`);
+        document.getElementById("deck").innerHTML = "";
+        document.getElementById("avgElixir").textContent = "";
+        let oldBtn = document.getElementById("launchBtn");
+        if (oldBtn) oldBtn.remove();
+        return;
+      }
+      const picked = pickRandom(pool, count);
+      picked.forEach(card => usedIds.add(card.id));
+      deck = deck.concat(picked);
+    }
+  }
+
+  // Fill remaining slots randomly
+  const remainingSlots = maxCards - deck.length;
+  if (remainingSlots > 0) {
+    const pool = cards.filter(c => !usedIds.has(c.id));
+    if (pool.length < remainingSlots) {
+      showError(`Not enough cards to fill the deck.`);
+      document.getElementById("deck").innerHTML = "";
+      document.getElementById("avgElixir").textContent = "";
+      let oldBtn = document.getElementById("launchBtn");
+      if (oldBtn) oldBtn.remove();
+      return;
+    }
+    const picked = pickRandom(pool, remainingSlots);
+    deck = deck.concat(picked);
+  }
+
+  // Robust average elixir matching
   let targetElixir = parseFloat(document.getElementById('elixirRange').value);
   let useTarget = targetElixir > 0;
-
-  let tries = 0, deck = [], avg = 0;
-  do {
-    // If all sliders are 0, randomize total 8 cards
-    let totalSelected = Object.values(rarities).reduce((a, b) => a + b, 0);
-    if (totalSelected === 0) {
-      deck = pickRandom(cards, 8);
-    } else {
+  let tries = 0, avg = deck.length > 0 ? (deck.reduce((sum, c) => sum + c.elixir, 0) / deck.length) : 0;
+  if (useTarget) {
+    while (Math.abs(avg - targetElixir) > 0.2 && tries < 1000) {
+      // Try again with random fill
       deck = [];
-      let usedIds = new Set();
-      Object.entries(rarities).forEach(([rarity, count]) => {
-        const pool = cards.filter(c => c.rarity === rarity && !usedIds.has(c.id));
-        for (let i = 0; i < count && pool.length; i++) {
-          const card = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
-          deck.push(card);
-          usedIds.add(card.id);
+      usedIds = new Set();
+      for (const [rarity, count] of Object.entries(rarities)) {
+        if (count > 0) {
+          const pool = cards.filter(c => c.rarity === rarity && !usedIds.has(c.id));
+          const picked = pickRandom(pool, count);
+          picked.forEach(card => usedIds.add(card.id));
+          deck = deck.concat(picked);
         }
-      });
-      if (deck.length < maxCards) {
-        const remaining = cards.filter(c => !usedIds.has(c.id));
-        deck = deck.concat(pickRandom(remaining, maxCards - deck.length));
       }
-      deck = deck.slice(0, maxCards);
+      const remainingSlots = maxCards - deck.length;
+      if (remainingSlots > 0) {
+        const pool = cards.filter(c => !usedIds.has(c.id));
+        const picked = pickRandom(pool, remainingSlots);
+        deck = deck.concat(picked);
+      }
+      avg = deck.length > 0 ? (deck.reduce((sum, c) => sum + c.elixir, 0) / deck.length) : 0;
+      tries++;
     }
-    avg = deck.length > 0 ? (deck.reduce((sum, c) => sum + c.elixir, 0) / deck.length) : 0;
-    tries++;
-    // If not using target, break after first deck
-    if (!useTarget) break;
-    // If using target, repeat until within ±0.2 or 1000 tries
-  } while (useTarget && Math.abs(avg - targetElixir) > 0.2 && tries < 1000);
-
-  if (useTarget && Math.abs(avg - targetElixir) > 0.2) {
-    showError(`Couldn't match target elixir (${targetElixir}) after 1000 tries.`);
+    if (Math.abs(avg - targetElixir) > 0.2) {
+      showError(`Couldn't match target elixir (${targetElixir}) after 1000 tries.`);
+      document.getElementById("deck").innerHTML = "";
+      document.getElementById("avgElixir").textContent = "";
+      let oldBtn = document.getElementById("launchBtn");
+      if (oldBtn) oldBtn.remove();
+      return;
+    } else {
+      showError('');
+    }
   } else {
     showError('');
   }

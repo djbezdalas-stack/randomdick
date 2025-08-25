@@ -181,7 +181,7 @@ function renderDeck(deck, avg) {
 
   // Deck link (new format)
   const deckIds = deck.map(c => c.id).join(";");
-  const deckLabel = "MassiveRandomDick"; // or let user choose
+  const deckLabel = "Royals"; // or let user choose
   const deckThumb = "159000000"; // default to King icon, or pick first card id
   const deckUrl = `https://link.clashroyale.com/en/?clashroyale://copyDeck?deck=${deckIds}&l=${deckLabel}&tt=${deckThumb}`;
 

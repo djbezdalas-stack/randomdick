@@ -179,8 +179,11 @@ function renderDeck(deck, avg) {
   // Display average elixir
   document.getElementById("avgElixir").textContent = `Average elixir cost: ${avg.toFixed(1)}`;
 
-  // Deck link
-  const deckUrl = "https://link.clashroyale.com/deck/en?deck=" + deck.map(c => c.id).join(";");
+  // Deck link (new format)
+  const deckIds = deck.map(c => c.id).join(";");
+  const deckLabel = "MassiveRandomDick"; // or let user choose
+  const deckThumb = "126000083"; // default to King icon, or pick first card id
+  const deckUrl = `https://link.clashroyale.com/en/?clashroyale://copyDeck?deck=${deckIds}&l=${deckLabel}&tt=${deckThumb}`;
 
   // Remove old launch button if present
   let oldBtn = document.getElementById("launchBtn");
@@ -193,7 +196,7 @@ function renderDeck(deck, avg) {
   launchBtn.textContent = "Launch in Clash Royale";
   launchBtn.target = "_blank";
   launchBtn.href = deckUrl;
-  launchBtn.style.width = "100%";
+  // Remove width: 100% to avoid stretching
   launchBtn.style.marginTop = "10px";
   launchBtn.style.fontFamily = "'YouBlockhead', sans-serif";
   launchBtn.style.fontWeight = "bold";

@@ -1,0 +1,184 @@
+@font-face { font-family: 'YouBlockhead'; src: url('assets/fonts/YouBlockhead.woff2') format('woff2'), url('assets/fonts/YouBlockhead.woff') format('woff'); font-weight: normal; }
+
+:root {
+  --cr-common: #bdbdbd;
+  --cr-rare: #4fc3f7;
+  --cr-epic: #ba68c8;
+  --cr-legendary: #ffd700;
+  --cr-champion: #ff7043;
+  --slider-handle: #2196f3;
+  --slider-track: #ffd700;
+  --panel-bg: #0b1d3b;
+}
+
+body {
+  font-family: 'YouBlockhead', sans-serif;
+  background: url('assets/Item_Lucky_Drops_Background_Common.png') no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+h1 {
+  font-family: 'YouBlockhead', sans-serif;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.panel {
+  background: var(--panel-bg);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  max-width: 500px;
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.sliders, .rarity-section {
+  flex: 1;
+}
+
+.rarity-section h2 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--slider-track);
+  border-radius: 5px;
+  outline: none;
+  margin-top: 5px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--slider-handle);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--slider-handle);
+  cursor: pointer;
+}
+
+#generateBtn {
+  width: 100%;
+  background: var(--slider-track);
+  color: #000;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  margin: 15px 0;
+  cursor: pointer;
+  font-weight: normal;
+}
+#generateBtn:hover {
+  filter: brightness(1.1);
+}
+
+#generateBtn, .launch-btn {
+  font-family: 'YouBlockhead', sans-serif;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.launch-btn, .deck .launch-btn {
+  display: block;
+  background: var(--slider-track);
+  color: #222;
+  font-family: 'YouBlockhead', sans-serif;
+  font-weight: bold;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  margin: 18px auto 0 auto;
+  box-shadow: 0 2px 6px #0003;
+  transition: background 0.2s;
+  text-align: center;
+  max-width: 320px;
+}
+.launch-btn:hover { filter: brightness(1.1); }
+
+.deck {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 4px;
+  justify-items: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.card {
+  width: 84px;
+  height: 111px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #232b3a 60%, #181d29 100%);
+  box-shadow: 0 2px 8px #0008, 0 0 0 3px #fff2 inset;
+  border: 2.5px solid #222;
+  position: relative;
+}
+.card.common { border-color: var(--cr-common); }
+.card.rare { border-color: var(--cr-rare); }
+.card.epic { border-color: var(--cr-epic); }
+.card.legendary { border-color: var(--cr-legendary); }
+.card.champion { border-color: var(--cr-champion); }
+.card img {
+  width: 90%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px #0006;
+}
+
+.elixir-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+.elixir-icon {
+  width: 24px;
+  margin-right: 8px;
+}
+.elixir-text {
+  font-size: 1.4rem;
+  color: #d36bff;
+}
+
+.app {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
+}

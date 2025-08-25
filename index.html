@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clash Royale Random Deck Generator</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="assets/icon_menu_cards.png">
+</head>
+<body>
+  <div class="app">
+    <h1>Clash Royale Random Deck Generator</h1>
+
+    <div class="panel">
+      <!-- Controls -->
+      <div class="controls">
+        <div class="sliders">
+          <label for="elixirRange">Target Average Elixir: <span id="elixirValue">RANDOM</span></label>
+          <input type="range" id="elixirRange" min="0" max="8" step="0.1" value="0">
+        </div>
+
+        <!-- Rarity Customization -->
+        <div class="rarity-section">
+          <h2>Rarity Customization</h2>
+          <label style="color: var(--cr-common)">Common: <span id="commonValue">RANDOM</span>
+            <input type="range" id="commonRange" min="0" max="8" value="0">
+          </label>
+          <label style="color: var(--cr-rare)">Rare: <span id="rareValue">RANDOM</span>
+            <input type="range" id="rareRange" min="0" max="8" value="0">
+          </label>
+          <label style="color: var(--cr-epic)">Epic: <span id="epicValue">RANDOM</span>
+            <input type="range" id="epicRange" min="0" max="8" value="0">
+          </label>
+          <label style="color: var(--cr-legendary)">Legendary: <span id="legendaryValue">RANDOM</span>
+            <input type="range" id="legendaryRange" min="0" max="8" value="0">
+          </label>
+          <label style="color: var(--cr-champion)">Champion: <span id="championValue">RANDOM</span>
+            <input type="range" id="championRange" min="0" max="1" value="0">
+          </label>
+        </div>
+      </div>
+
+      <button id="generateBtn">Generate Deck</button>
+
+      <!-- Deck Display -->
+      <div id="deck" class="deck"></div>
+
+      <!-- Average Elixir -->
+      <div class="elixir-display">
+        <img src="assets/elixirdrop.png" class="elixir-icon" alt="Elixir" />
+        <span class="elixir-text" id="avgElixir">0.0</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

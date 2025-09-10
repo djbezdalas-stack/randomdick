@@ -26,7 +26,16 @@ export async function GET(request) {
       });
     }
 
-    return new Response(JSON.stringify(data), {
+    const masteries = (data.cardMasteries || []).map(m => ({
+      name: m.name,
+      level: m.level,
+      maxLevel: m.maxLevel,
+      progress: m.progress,
+      target: m.target,
+      icon: m.iconUrls?.large || "",
+}));
+
+    return new Response(JSON.stringify(masteries), {
       status: 200,
       headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
     });

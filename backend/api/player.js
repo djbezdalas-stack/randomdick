@@ -16,7 +16,7 @@ export async function GET(request) {
         Authorization: `Bearer ${process.env.ROYALEAPI_KEY}`,
       },
     });
-
+    console.log("ROYALEAPI_KEY exists?", !!process.env.ROYALEAPI_KEY);
     const data = await response.json();
     if (!response.ok) {
       console.log("API error response:", data);

@@ -1,5 +1,17 @@
+export function GET(request) {
+  return new Response(
+    JSON.stringify({ message: "Hello from Vercel!" }),
+    {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*", // allow your frontend to fetch
+      },
+    }
+  );
+}
 
-export default async function handler(req, res) {
+/* export default async function handler(req, res) {
   const { tag } = req.query;
 
   if (!tag) {
@@ -28,4 +40,4 @@ export default async function handler(req, res) {
   } catch (err) {
     res.status(500).json({ error: "Server error", details: err.message });
   }
-}
+} */

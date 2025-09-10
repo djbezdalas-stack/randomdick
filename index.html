@@ -114,10 +114,28 @@
   <!-- Debug Panel -->
 <div style="margin-top:20px;">
   <h2>Debug: Player Lookup</h2>
-  <input type="text" id="playerTagInput" placeholder="Enter player tag (e.g. 8Y0YV92QQ)">
+  <input type="text" id="playerTagInput" placeholder="Enter player tag (any text)">
   <button id="lookupBtn">Lookup Player</button>
+  <pre id="output"></pre>
 </div>
 
+<script>
+  const lookupBtn = document.getElementById("lookupBtn");
+  const output = document.getElementById("output");
+
+  lookupBtn.addEventListener("click", async () => {
+    // Just use the value as a test; function ignores it
+    const tag = document.getElementById("playerTagInput").value.trim();
+
+    try {
+      const res = await fetch("/api/hello");
+      const data = await res.json();
+      output.textContent = JSON.stringify(data, null, 2);
+    } catch (err) {
+      output.textContent = "Error fetching API: " + err;
+    }
+  });
+</script>
 <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,5 @@
+# Ignore everything except api/ and package.json
+*
+!.vercelignore
+!package.json
+!api/

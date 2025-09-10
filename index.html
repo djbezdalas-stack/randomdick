@@ -125,14 +125,14 @@
 
   lookupBtn.addEventListener("click", async () => {
     const tag = document.getElementById("playerTagInput").value.trim();
+    if (!tag) return alert("Enter a player tag!");
 
     try {
-      // Use full Vercel URL here
-      const res = await fetch("https://randomdick.vercel.app/api/player.js");
+      const res = await fetch(`https://randomdick.vercel.app/api/player?tag=${encodeURIComponent(tag)}`);
       const data = await res.json();
       output.textContent = JSON.stringify(data, null, 2);
     } catch (err) {
-      output.textContent = "Error fetching API: " + err;
+      output.textContent = "Error fetching player: " + err;
     }
   });
 </script>

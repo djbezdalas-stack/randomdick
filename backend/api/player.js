@@ -14,7 +14,7 @@ export async function GET(request) {
     if (!tag.startsWith("#")) tag = "#" + tag;
 
     // RoyaleAPI proxy endpoint
-    const apiUrl = `https://proxy.royaleapi.dev/v1/player/${encodeURIComponent(tag)}`;
+    const apiUrl = `https://proxy.royaleapi.dev/v1/players/${encodeURIComponent(tag)}`;
 
     const response = await fetch(apiUrl, {
       headers: {

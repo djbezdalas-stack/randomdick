@@ -3,3 +3,4 @@
 !.vercelignore
 !package.json
 !api/
+!player.js

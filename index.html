@@ -130,12 +130,38 @@
     try {
       const res = await fetch(`https://randomdick.vercel.app/api/player?tag=${encodeURIComponent(tag)}`);
       const data = await res.json();
-      output.textContent = JSON.stringify(data, null, 2);
+
+      // Filter only card masteries
+      const masteries = (data.badges || [])
+        .filter(b => b.name.startsWith("Mastery"))
+        .map(m => ({
+          name: m.name.replace(/^Mastery/, ""),
+          level: m.level,
+          maxLevel: m.maxLevel,
+          progress: m.progress,
+          target: m.target,
+          icon: m.iconUrls?.large || "",
+        }));
+
+      if (!masteries.length) {
+        output.textContent = "No card masteries found for this player.";
+        return;
+      }
+
+      // Create CSV-style columned text
+      const header = ["Name", "Level", "MaxLevel", "Progress", "Target", "Icon"];
+      const rows = masteries.map(m =>
+        [m.name, m.level, m.maxLevel, m.progress, m.target, m.icon].join("\t") // tab-separated for column alignment
+      );
+
+      output.textContent = [header.join("\t"), ...rows].join("\n");
+
     } catch (err) {
       output.textContent = "Error fetching player: " + err;
     }
   });
 </script>
+
 <script src="script.js"></script>
 </body>
 </html>

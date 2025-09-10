@@ -26,18 +26,7 @@ export async function GET(request) {
       });
     }
 
-    const masteries = (data.badges || [])
-  .filter(b => b.name.startsWith("Mastery"))
-  .map(m => ({
-    name: m.name.replace(/^Mastery/, ""), // optional: remove prefix
-    level: m.level,
-    maxLevel: m.maxLevel,
-    progress: m.progress,
-    target: m.target,
-    icon: m.iconUrls?.large || "",
-  }));
-
-    return new Response(JSON.stringify(masteries), {
+    return new Response(JSON.stringify(data), {
       status: 200,
       headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
     });

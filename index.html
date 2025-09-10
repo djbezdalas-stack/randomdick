@@ -124,11 +124,11 @@
   const output = document.getElementById("output");
 
   lookupBtn.addEventListener("click", async () => {
-    // Just use the value as a test; function ignores it
     const tag = document.getElementById("playerTagInput").value.trim();
 
     try {
-      const res = await fetch("/api/hello");
+      // Use full Vercel URL here
+      const res = await fetch("https://randomdick.vercel.app/api/player.js");
       const data = await res.json();
       output.textContent = JSON.stringify(data, null, 2);
     } catch (err) {

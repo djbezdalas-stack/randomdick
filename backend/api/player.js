@@ -10,13 +10,15 @@ export async function GET(request) {
       );
     }
 
-    // Ensure the tag starts with #
+    // Ensure tag starts with #
     if (!tag.startsWith("#")) tag = "#" + tag;
 
-    const apiUrl = `https://api.clashroyale.com/v1/players/${encodeURIComponent(tag)}`;
+    // RoyaleAPI proxy endpoint
+    const apiUrl = `https://proxy.royaleapi.com/player/${encodeURIComponent(tag)}`;
+
     const response = await fetch(apiUrl, {
       headers: {
-        Authorization: `Bearer ${process.env.CR_TOKEN}`,
+        Authorization: `Bearer ${process.env.ROYALEAPI_KEY}`,
       },
     });
 

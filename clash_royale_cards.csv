@@ -1,120 +1,121 @@
-Archer Queen,5.0,champion,26000072,troop-ground
-Archers,3.0,common,26000001,troop-ground
-Arrows,3.0,common,28000001,spell
-Baby Dragon,4.0,epic,26000015,troop-air
-Balloon,5.0,epic,26000006,troop-air
-Bandit,3.0,legendary,26000046,troop-ground
-Barbarian Barrel,2.0,epic,28000015,spell
-Barbarian Hut,6.0,rare,27000005,building
-Barbarians,5.0,common,26000008,troop-ground
-Bats,2.0,common,26000049,troop-air
-Battle Healer,4.0,rare,26000068,troop-ground
-Battle Ram,4.0,rare,26000036,troop-ground
-Berserker,2.0,common,26000102,troop-ground
-Bomb Tower,4.0,rare,27000004,building
-Bomber,2.0,common,26000013,troop-ground
-Boss Bandit,6.0,champion,26000103,troop-ground
-Bowler,5.0,epic,26000034,troop-ground
-Cannon Cart,5.0,epic,27000000,troop-ground
-Cannon,3.0,common,26000054,building
-Clone,3.0,epic,28000013,spell
-Dark Prince,4.0,epic,26000027,troop-ground
-Dart Goblin,3.0,rare,26000040,troop-ground
-Earthquake,3.0,rare,28000014,spell
-Electro Dragon,5.0,epic,26000063,troop-air
-Electro Giant,7.0,epic,26000085,troop-ground
-Electro Spirit,1.0,common,26000084,troop-ground
-Electro Wizard,4.0,legendary,26000042,troop-ground
-Elite Barbarians,6.0,common,26000043,troop-ground
-Elixir Collector,6.0,rare,27000007,building
-Elixir Golem,3.0,rare,26000067,troop-ground
-Executioner,5.0,epic,26000045,troop-ground
-Fire Spirit,1.0,common,26000031,troop-ground
-Fireball,4.0,rare,28000000,spell
-Firecracker,3.0,common,26000064,troop-ground
-Fisherman,3.0,legendary,26000061,troop-ground
-Flying Machine,4.0,rare,26000057,troop-air
-Freeze,4.0,epic,28000005,spell
-Furnace,4.0,rare,27000010,troop-ground
-Giant Skeleton,6.0,epic,26000003,troop-ground
-Giant Snowball,2.0,common,26000020,spell
-Giant,5.0,rare,28000017,troop-ground
-Goblin Barrel,3.0,epic,28000004,spell
-Goblin Cage,4.0,rare,27000012,building
-Goblin Curse,2.0,epic,28000024,spell
-Goblin Demolisher,4.0,rare,26000095,troop-ground
-Goblin Drill,4.0,epic,27000013,building
-Goblin Gang,3.0,common,26000041,troop-ground
-Goblin Giant,6.0,epic,26000060,troop-ground
-Goblin Hut,5.0,rare,27000001,building
-Goblin Machine,5.0,legendary,26000096,troop-ground
-Goblins,2.0,common,26000002,troop-ground
-Goblinstein,5.0,champion,26000099,troop-ground
-Golden Knight,4.0,champion,26000074,troop-ground
-Golem,8.0,epic,26000009,troop-ground
-Graveyard,5.0,legendary,28000010,spell
-Guards,3.0,epic,26000025,troop-ground
-Heal Spirit,1.0,rare,28000016,troop-ground
-Hog Rider,4.0,rare,26000021,troop-ground
-Hunter,4.0,epic,26000044,troop-ground
-Ice Golem,2.0,rare,26000038,troop-ground
-Ice Spirit,1.0,common,26000030,troop-ground
-Ice Wizard,3.0,legendary,26000023,troop-ground
-Inferno Dragon,4.0,legendary,26000037,troop-air
-Inferno Tower,5.0,rare,27000003,building
-Knight,3.0,common,26000000,troop-ground
-Lava Hound,7.0,legendary,26000029,troop-air
-Lightning,6.0,epic,28000007,spell
-Little Prince,3.0,champion,26000093,troop-ground
-Lumberjack,4.0,legendary,26000035,troop-ground
-Magic Archer,4.0,legendary,26000062,troop-ground
-Mega Knight,7.0,legendary,26000055,troop-ground
-Mega Minion,3.0,rare,26000039,troop-air
-Mighty Miner,4.0,champion,26000065,troop-ground
-Miner,3.0,legendary,26000032,troop-ground
-Mini P.E.K.K.A,4.0,rare,26000018,troop-ground
-Minion Horde,5.0,common,26000022,troop-air
-Minions,3.0,common,26000005,troop-air
-Mirror,0,epic,28000006,spell
-Monk,5.0,champion,26000077,troop-ground
-Mortar,4.0,common,27000002,building
-Mother Witch,4.0,legendary,26000083,troop-ground
-Musketeer,4.0,rare,26000014,troop-ground
-Night Witch,4.0,legendary,26000048,troop-ground
-P.E.K.K.A,7.0,epic,26000004,troop-ground
-Phoenix,4.0,legendary,26000087,troop-air
-Poison,4.0,epic,28000009,spell
-Prince,5.0,epic,26000016,troop-ground
-Princess,3.0,legendary,26000026,troop-ground
-Rage,2.0,epic,28000002,spell
-Ram Rider,5.0,legendary,26000051,troop-ground
-Rascals,5.0,common,26000053,troop-ground
-Rocket,6.0,rare,28000003,spell
-Royal Delivery,3.0,common,28000018,spell
-Royal Ghost,3.0,legendary,26000050,troop-ground
-Royal Giant,6.0,common,26000024,troop-ground
-Royal Hogs,5.0,rare,26000059,troop-ground
-Royal Recruits,7.0,common,26000047,troop-ground
-Rune Giant,4.0,epic,26000101,troop-ground
-Skeleton Army,3.0,epic,26000012,troop-ground
-Skeleton Barrel,3.0,common,26000056,troop-air
-Skeleton Dragons,4.0,common,26000080,troop-air
-Skeleton King,4.0,champion,26000069,troop-ground
-Skeletons,1.0,common,26000010,troop-ground
-Sparky,6.0,legendary,26000033,troop-ground
-Spear Goblins,2.0,common,26000019,troop-ground
-Suspicious Bush,2.0,rare,26000097,troop-ground
-Tesla,4.0,common,27000006,building
-The Log,2.0,legendary,28000011,spell
-Three Musketeers,9.0,rare,26000028,troop-ground
-Tombstone,3.0,rare,27000009,building
-Tornado,3.0,epic,28000012,spell
-Valkyrie,4.0,rare,26000011,troop-ground
-Void,3.0,epic,28000023,spell
-Wall Breakers,2.0,epic,26000058,troop-ground
-Witch,5.0,epic,26000007,troop-ground
-Wizard,5.0,rare,26000017,troop-ground
-X-Bow,6.0,epic,27000008,building
-Zap,2.0,common,28000008,spell
-Zappies,4.0,rare,26000052,troop-ground
-Spirit Empress,6.0,legendary,28000025,troop-air
+Archer Queen,5.0,champion,26000072,troop-ground,ArcherQueen
+Archers,3.0,common,26000001,troop-ground,Archer
+Arrows,3.0,common,28000001,spell,Arrows
+Baby Dragon,4.0,epic,26000015,troop-air,BabyDragon
+Balloon,5.0,epic,26000006,troop-air,Balloon
+Bandit,3.0,legendary,26000046,troop-ground,Assassin
+Barbarian Barrel,2.0,epic,28000015,spell,BarbLog
+Barbarian Hut,6.0,rare,27000005,building,BarbarianHut
+Barbarians,5.0,common,26000008,troop-ground,Barbarians
+Bats,2.0,common,26000049,troop-air,Bats
+Battle Healer,4.0,rare,26000068,troop-ground,BattleHealer
+Battle Ram,4.0,rare,26000036,troop-ground,BattleRam
+Berserker,2.0,common,26000102,troop-ground,Berserker
+Bomb Tower,4.0,rare,27000004,building,BombTower
+Bomber,2.0,common,26000013,troop-ground,Bomber
+Boss Bandit,6.0,champion,26000103,troop-ground,BossBandit
+Bowler,5.0,epic,26000034,troop-ground,Bowler
+Cannon Cart,5.0,epic,27000000,troop-ground,MovingCannon
+Cannon,3.0,common,26000054,building,Cannon
+Clone,3.0,epic,28000013,spell,Clone
+Dark Prince,4.0,epic,26000027,troop-ground,DarkPrince
+Dart Goblin,3.0,rare,26000040,troop-ground,BlowdartGoblin
+Earthquake,3.0,rare,28000014,spell,Earthquake
+Electro Dragon,5.0,epic,26000063,troop-air,ElectroDragon
+Electro Giant,7.0,epic,26000085,troop-ground,ElectroGiant
+Electro Spirit,1.0,common,26000084,troop-ground,ElectroSpirit
+Electro Wizard,4.0,legendary,26000042,troop-ground,ElectroWizard
+Elite Barbarians,6.0,common,26000043,troop-ground,AngryBarbarians
+Elixir Collector,6.0,rare,27000007,building,Elixir Collector
+Elixir Golem,3.0,rare,26000067,troop-ground,ElixirGolem
+Executioner,5.0,epic,26000045,troop-ground,AxeMan
+Fire Spirit,1.0,common,26000031,troop-ground,FireSpirits
+Fireball,4.0,rare,28000000,spell,Fireball
+Firecracker,3.0,common,26000064,troop-ground,Firecracker
+Fisherman,3.0,legendary,26000061,troop-ground,Fisherman
+Flying Machine,4.0,rare,26000057,troop-air,DartBarrell
+Freeze,4.0,epic,28000005,spell,Freeze
+Furnace,4.0,rare,27000010,troop-ground,FirespiritHut
+Giant Skeleton,6.0,epic,26000003,troop-ground,GiantSkeleton
+Giant Snowball,2.0,common,26000020,spell,Snowball
+Giant,5.0,rare,28000017,troop-ground,Giant
+Goblin Barrel,3.0,epic,28000004,spell,GoblinBarrel
+Goblin Cage,4.0,rare,27000012,building,GoblinCage
+Goblin Curse,2.0,epic,28000024,spell,GoblinCurse
+Goblin Demolisher,4.0,rare,26000095,troop-ground,GoblinDemolisher
+Goblin Drill,4.0,epic,27000013,building,GoblinDrill
+Goblin Gang,3.0,common,26000041,troop-ground,GoblinGang
+Goblin Giant,6.0,epic,26000060,troop-ground,GoblinGiant
+Goblin Hut,5.0,rare,27000001,building,GoblinHut
+Goblin Machine,5.0,legendary,26000096,troop-ground,GoblinMachine
+Goblins,2.0,common,26000002,troop-ground,Goblins
+Goblinstein,5.0,champion,26000099,troop-ground,Goblinstein
+Golden Knight,4.0,champion,26000074,troop-ground,GoldenKnight
+Golem,8.0,epic,26000009,troop-ground,Golem
+Graveyard,5.0,legendary,28000010,spell,Graveyard
+Guards,3.0,epic,26000025,troop-ground,SkeletonWarriors
+Heal Spirit,1.0,rare,28000016,troop-ground,Heal
+Hog Rider,4.0,rare,26000021,troop-ground,HogRider
+Hunter,4.0,epic,26000044,troop-ground,Hunter
+Ice Golem,2.0,rare,26000038,troop-ground,IceGolemite
+Ice Spirit,1.0,common,26000030,troop-ground,IceSpirits
+Ice Wizard,3.0,legendary,26000023,troop-ground,IceWizard
+Inferno Dragon,4.0,legendary,26000037,troop-air,InfernoDragon
+Inferno Tower,5.0,rare,27000003,building,InfernoTower
+Knight,3.0,common,26000000,troop-ground,Knight
+Lava Hound,7.0,legendary,26000029,troop-air,LavaHound
+Lightning,6.0,epic,28000007,spell,Lightning
+Little Prince,3.0,champion,26000093,troop-ground,LittlePrince
+Lumberjack,4.0,legendary,26000035,troop-ground,RageBarbarian
+Magic Archer,4.0,legendary,26000062,troop-ground,EliteArcher
+Mega Knight,7.0,legendary,26000055,troop-ground,MegaKnight
+Mega Minion,3.0,rare,26000039,troop-air,MegaMinion
+Mighty Miner,4.0,champion,26000065,troop-ground,MightyMiner
+Miner,3.0,legendary,26000032,troop-ground,Miner
+Mini P.E.K.K.A,4.0,rare,26000018,troop-ground,MiniPekka
+Minion Horde,5.0,common,26000022,troop-air,MinionHorde
+Minions,3.0,common,26000005,troop-air,Minions
+Mirror,0,epic,28000006,spell,Mirror
+Monk,5.0,champion,26000077,troop-ground,Monk
+Mortar,4.0,common,27000002,building,Mortar
+Mother Witch,4.0,legendary,26000083,troop-ground,WitchMother
+Musketeer,4.0,rare,26000014,troop-ground,Musketeer
+Night Witch,4.0,legendary,26000048,troop-ground,DarkWitch
+P.E.K.K.A,7.0,epic,26000004,troop-ground,Pekka
+Phoenix,4.0,legendary,26000087,troop-air,Phoenix
+Poison,4.0,epic,28000009,spell,Poison
+Prince,5.0,epic,26000016,troop-ground,Prince
+Princess,3.0,legendary,26000026,troop-ground,Princess
+Rage,2.0,epic,28000002,spell,Rage
+Ram Rider,5.0,legendary,26000051,troop-ground,RamRider
+Rascals,5.0,common,26000053,troop-ground,Rascals
+Rocket,6.0,rare,28000003,spell,Rocket
+Royal Delivery,3.0,common,28000018,spell,RoyalDelivery
+Royal Ghost,3.0,legendary,26000050,troop-ground,Ghost
+Royal Giant,6.0,common,26000024,troop-ground,RoyalGiant
+Royal Hogs,5.0,rare,26000059,troop-ground,RoyalHogs
+Royal Recruits,7.0,common,26000047,troop-ground,RoyalRecruits
+Rune Giant,4.0,epic,26000101,troop-ground,GiantBuffer
+Skeleton Army,3.0,epic,26000012,troop-ground,SkeletonArmy
+Skeleton Barrel,3.0,common,26000056,troop-air,SkeletonBalloon
+Skeleton Dragons,4.0,common,26000080,troop-air,SkeletonDragons
+Skeleton King,4.0,champion,26000069,troop-ground,SkeletonKing
+Skeletons,1.0,common,26000010,troop-ground,Skeletons
+Sparky,6.0,legendary,26000033,troop-ground,ZapMachine
+Spear Goblins,2.0,common,26000019,troop-ground,SpearGoblins
+Suspicious Bush,2.0,rare,26000097,troop-ground,SuspiciousBush
+Tesla,4.0,common,27000006,building,Tesla
+The Log,2.0,legendary,28000011,spell,Log
+Three Musketeers,9.0,rare,26000028,troop-ground,ThreeMusketeers
+Tombstone,3.0,rare,27000009,building,Tombstone
+Tornado,3.0,epic,28000012,spell,Tornado
+Valkyrie,4.0,rare,26000011,troop-ground,Valkyrie
+Vines,3.0,epic,28000026,spell,Vines
+Void,3.0,epic,28000023,spell,DarkMagic
+Wall Breakers,2.0,epic,26000058,troop-ground,Wallbreakers
+Witch,5.0,epic,26000007,troop-ground,Witch
+Wizard,5.0,rare,26000017,troop-ground,Wizard
+X-Bow,6.0,epic,27000008,building,Xbow
+Zap,2.0,common,28000008,spell,Zap
+Zappies,4.0,rare,26000052,troop-ground,MiniSparkys
+Spirit Empress,6.0,legendary,28000025,troop-air,MergeMaiden

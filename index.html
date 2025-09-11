@@ -92,6 +92,16 @@
       <input type="range" id="buildingRange" min="-1" max="8" value="-1">
     </div>
   </div>
+  <div class="slider-col">
+  <h2 class="outlined">Mastery (requires player data)</h2>
+  <div class="slider-group">
+    <label>
+      Minimum Mastery Level: <span id="masteryValue">N/A</span>
+    </label>
+    <input type="range" id="masteryRange" min="0" max="10" value="0" disabled>
+    <small style="color:gray;">Fetch player data first</small>
+  </div>
+</div>
 </div>
   <button id="generateBtn" class="action-btn">Generate Deck</button>
   <!-- Deck Display -->
@@ -122,17 +132,35 @@
 <script>
   const lookupBtn = document.getElementById("lookupBtn");
   const output = document.getElementById("output");
+  const masterySlider = document.getElementById("masteryRange");
+  const masteryValue = document.getElementById("masteryValue");
+
+  let masteryData = null; // cache from API
+  let lookupCooldown = null;
 
   lookupBtn.addEventListener("click", async () => {
     const tag = document.getElementById("playerTagInput").value.trim();
     if (!tag) return alert("Enter a player tag!");
+
+    // Disable button + start cooldown
+    lookupBtn.disabled = true;
+    let seconds = 60;
+    lookupBtn.textContent = `Wait ${seconds}s`;
+    lookupCooldown = setInterval(() => {
+      seconds--;
+      lookupBtn.textContent = seconds > 0 ? `Wait ${seconds}s` : "Lookup Player";
+      if (seconds <= 0) {
+        clearInterval(lookupCooldown);
+        lookupBtn.disabled = false;
+      }
+    }, 1000);
 
     try {
       const res = await fetch(`https://randomdick.vercel.app/api/player?tag=${encodeURIComponent(tag)}`);
       const data = await res.json();
 
       // Filter only card masteries
-      const masteries = (data.badges || [])
+      masteryData = (data.badges || [])
         .filter(b => b.name.startsWith("Mastery"))
         .map(m => ({
           name: m.name.replace(/^Mastery/, ""),
@@ -142,25 +170,35 @@
           target: m.target,
           icon: m.iconUrls?.large || "",
         }));
-
-      if (!masteries.length) {
+        window.masteryData = masteryData; // cache globally for deck generator
+        
+      if (!masteryData.length) {
         output.textContent = "No card masteries found for this player.";
+        masteryData = null;
         return;
       }
 
-      // Create CSV-style columned text
-      const header = ["Name", "Level", "MaxLevel", "Progress", "Target", "Icon"];
-      const rows = masteries.map(m =>
-        [m.name, m.level, m.maxLevel, m.progress, m.target, m.icon].join("\t") // tab-separated for column alignment
-      );
+      // Enable mastery filter slider
+      masterySlider.disabled = false;
+      masterySlider.addEventListener("input", () => {
+        masteryValue.textContent = masterySlider.value;
+      });
+      masteryValue.textContent = masterySlider.value;
 
+      // Show formatted mastery data
+      const header = ["Name", "Level", "MaxLevel", "Progress", "Target", "Icon"];
+      const rows = masteryData.map(m =>
+        [m.name, m.level, m.maxLevel, m.progress, m.target, m.icon].join("\t")
+      );
       output.textContent = [header.join("\t"), ...rows].join("\n");
 
     } catch (err) {
       output.textContent = "Error fetching player: " + err;
+      masteryData = null;
     }
   });
 </script>
+
 
 <script src="script.js"></script>
 </body>

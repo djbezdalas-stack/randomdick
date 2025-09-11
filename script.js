@@ -1,4 +1,3 @@
-// Utility: load CSV (trim fields, skip header, handle CRLF, handle quoted commas)
 async function loadCards() {
   const res = await fetch("clash_royale_cards.csv");
   const text = await res.text();
@@ -6,14 +5,12 @@ async function loadCards() {
   const lines = text.trim().split(/\r?\n/);
   const [, ...rows] = lines;
 
-  // Improved CSV parsing: handle quoted fields
   function parseCSVLine(line) {
-    // Simple split for well-formed CSVs (no quoted commas)
     return line.split(',').map(field => field.trim());
   }
 
   return rows.map(line => {
-    const [name, elixir, rarity, id, archetype] = parseCSVLine(line);
+    const [name, elixir, rarity, id, archetype, masteryName] = parseCSVLine(line);
     const idTrim = (id || "").trim();
     return {
       name: (name || "").trim(),
@@ -21,10 +18,12 @@ async function loadCards() {
       rarity: (rarity || "").toLowerCase().trim(),
       id: idTrim,
       archetype: (archetype || "").toLowerCase().trim(),
-      image: `./card_images/${idTrim}.png`
+      image: `./card_images/${idTrim}.png`,
+      masteryName: masteryName || ""
     };
   });
 }
+
 
 // Slider value display logic
 function setupSlider(sliderId, valueId, maxRandom) {
@@ -87,6 +86,31 @@ function pickRandom(arr, n) {
 function showError(msg) {
   const err = document.getElementById('error');
   if (err) err.textContent = msg;
+}
+
+// Mastery filter
+const masterySlider = document.getElementById("masteryRange");
+if (masterySlider) {
+  const minMastery = Number(masterySlider.value || 0);
+
+  if (minMastery > 0) {
+    if (!window.masteryData) {
+      showError("Mastery filters require fetching player data first!");
+      return;
+    }
+
+    // Filter pool by mastery level
+    pool = pool.filter(c => {
+      if (!c.masteryName) return false;
+      const m = window.masteryData.find(m => m.name === c.masteryName);
+      return m && m.level >= minMastery;
+    });
+
+    if (pool.length < maxCards) {
+      showError("Not enough cards meet the mastery filter to build a full deck.");
+      return;
+    }
+  }
 }
 
 async function generateDeck() {

@@ -47,7 +47,17 @@ h1 {
   margin-bottom: 10px;
   justify-content: center;
 }
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 10px;
+}
 
+.mastery-col {
+  grid-column: 1 / -1; /* spans full width below controls */
+  margin-top: 8px;
+}
 .slider-col {
   flex: 1;
   display: flex;
@@ -132,6 +142,23 @@ a.action-btn:hover {
   padding: 0 16px; /* only left + right padding */
   gap: 4px;
 }
+
+.error {
+  color: #ffb3b3;
+  min-height: 1.2em;
+  margin: 8px 0;
+}
+
+.mastery-output {
+  white-space: pre-wrap;
+  background: rgba(255,255,255,0.03);
+  padding: 10px;
+  border-radius: 8px;
+  max-height: 180px;
+  overflow: auto;
+  margin-top: 8px;
+}
+
 .card {
   position: relative;
   width: 100%;
@@ -241,4 +268,20 @@ a.action-btn:hover {
   font-family: inherit;
   padding: 6px 10px;
   font-size: 1em;
+}
+
+.expandable {
+  cursor: pointer;
+  user-select: none;
+}
+
+@media (max-width: 800px) {
+  .controls { grid-template-columns: 1fr; }
+  .deck { grid-template-columns: repeat(2, 1fr); }
+  .title { font-size: 24px; }
+}
+
+@media (max-width: 420px) {
+  .deck { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  button, a.action-btn { font-size: 16px; padding: 10px; }
 }

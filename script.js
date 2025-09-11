@@ -24,9 +24,8 @@ async function loadCards() {
   });
 }
 
-
 // Slider value display logic
-function setupSlider(sliderId, valueId, maxRandom) {
+function setupSlider(sliderId, valueId) {
   const slider = document.getElementById(sliderId);
   const display = document.getElementById(valueId);
 
@@ -46,31 +45,31 @@ function setupSlider(sliderId, valueId, maxRandom) {
 }
 
 // Rarity sliders
-const getCommon = setupSlider('commonRange','commonValue',8);
-const getRare = setupSlider('rareRange','rareValue',8);
-const getEpic = setupSlider('epicRange','epicValue',8);
-const getLegendary = setupSlider('legendaryRange','legendaryValue',8);
-const getChampion = setupSlider('championRange','championValue',1);
+const getCommon     = setupSlider('commonRange','commonValue');
+const getRare       = setupSlider('rareRange','rareValue');
+const getEpic       = setupSlider('epicRange','epicValue');
+const getLegendary  = setupSlider('legendaryRange','legendaryValue');
+const getChampion   = setupSlider('championRange','championValue');
 
 // Archetype sliders
-const getTroop = setupSlider('troopRange','troopValue',8);
-const getTroopAir = setupSlider('troopAirRange','troopAirValue',8);
-const getTroopGround = setupSlider('troopGroundRange','troopGroundValue',8);
-const getSpell = setupSlider('spellRange','spellValue',8);
-const getBuilding = setupSlider('buildingRange','buildingValue',8);
+const getTroop        = setupSlider('troopRange','troopValue');
+const getTroopAir     = setupSlider('troopAirRange','troopAirValue');
+const getTroopGround  = setupSlider('troopGroundRange','troopGroundValue');
+const getSpell        = setupSlider('spellRange','spellValue');
+const getBuilding     = setupSlider('buildingRange','buildingValue');
 
-// Elixir slider
-const getElixir = setupSlider('elixirRange','elixirValue',8);
+// Elixir slider (if present)
+const getElixir = setupSlider('elixirRange','elixirValue');
 
 const maxCards = 8;
 
-// All sliders that contribute to the 8-card budget
+// Sliders that count toward budget
 const budgetSliderIds = [
   'commonRange','rareRange','epicRange','legendaryRange','championRange',
   'troopRange','troopAirRange','troopGroundRange','spellRange','buildingRange'
 ];
 
-// Utility: pick n random items from array
+// Utility: pick n random items
 function pickRandom(arr, n) {
   const copy = arr.slice();
   const result = [];
@@ -82,45 +81,21 @@ function pickRandom(arr, n) {
   return result;
 }
 
-// Utility: show error message
+// Show error text
 function showError(msg) {
   const err = document.getElementById('error');
-  if (err) err.textContent = msg;
+  if (err) err.textContent = msg || '';
 }
 
-// Mastery filter
-const masterySlider = document.getElementById("masteryRange");
-if (masterySlider) {
-  const minMastery = Number(masterySlider.value || 0);
-
-  if (minMastery > 0) {
-    if (!window.masteryData) {
-      showError("Mastery filters require fetching player data first!");
-      return;
-    }
-
-    // Filter pool by mastery level
-    pool = pool.filter(c => {
-      if (!c.masteryName) return false;
-      const m = window.masteryData.find(m => m.name === c.masteryName);
-      return m && m.level >= minMastery;
-    });
-
-    if (pool.length < maxCards) {
-      showError("Not enough cards meet the mastery filter to build a full deck.");
-      return;
-    }
-  }
-}
-
+// ---- DECK GENERATION ----
 async function generateDeck() {
   const cards = await loadCards();
 
-  // Read sliders
   function safeValue(id) {
     const el = document.getElementById(id);
     return el ? Number(el.value) : 0;
   }
+
   const rarityValues = {
     common: safeValue('commonRange'),
     rare: safeValue('rareRange'),
@@ -128,6 +103,7 @@ async function generateDeck() {
     legendary: safeValue('legendaryRange'),
     champion: safeValue('championRange'),
   };
+
   const archetypeValues = {
     'troop':        safeValue('troopRange'),
     'troop-air':    safeValue('troopAirRange'),
@@ -140,20 +116,22 @@ async function generateDeck() {
   let deck = [];
   const hasChampion = () => deck.some(c => c.rarity === 'champion');
 
- const maxMastery = Number(document.getElementById("masteryRange")?.value || 10);
-  if (maxMastery < 10) {
-  if (!window.masteryData) {
-    showError("Mastery filters require fetching player data first!");
-    return;
-  }
-  pool = pool.filter(c => {
-    if (!c.masteryName) return false;
-    const m = window.masteryData.find(m => m.name === c.masteryName);
-    return m && m.level <= maxMastery;
-  });
+  // Mastery filter
+  const masteryRangeEl = document.getElementById("masteryRange");
+  const maxMastery = Number(masteryRangeEl?.value ?? 10);
+  if (masteryRangeEl && !masteryRangeEl.disabled && maxMastery < 10) {
+    if (!window.masteryData) {
+      showError("Mastery filters require fetching player data first!");
+      return;
+    }
+    pool = pool.filter(c => {
+      if (!c.masteryName) return false;
+      const m = window.masteryData.find(mm => mm.name === c.masteryName);
+      return m && m.level <= maxMastery;
+    });
   }
 
-  // Exclude sliders set to 0
+  // Exclude 0
   for (const [rarity, v] of Object.entries(rarityValues)) {
     if (v === 0) pool = pool.filter(c => c.rarity !== rarity);
   }
@@ -164,21 +142,17 @@ async function generateDeck() {
     }
   }
 
-  // Sanity: can we fill 8 after exclusions?
   if (pool.length < maxCards) {
     showError("Not enough cards after exclusions to build a full deck.");
     return;
   }
 
-  // Build requirements (val > 0 means “at least n”)
+  // Requirements
   const reqs = [];
   for (const [arch, v] of Object.entries(archetypeValues)) if (v > 0) reqs.push({ kind:'arch', key:arch, want:v });
   for (const [rar,  v] of Object.entries(rarityValues))    if (v > 0) reqs.push({ kind:'rar',  key:rar,  want:v });
-
-  // Archetypes first, then larger counts
   reqs.sort((a,b) => (a.kind !== b.kind) ? (a.kind === 'arch' ? -1 : 1) : (b.want - a.want));
 
-  // Satisfy requirements (best effort; cap to remaining slots/availability)
   for (const req of reqs) {
     if (deck.length >= maxCards) break;
 
@@ -186,7 +160,6 @@ async function generateDeck() {
       let sub = req.key === 'troop'
         ? pool.filter(c => c.archetype.startsWith('troop'))
         : pool.filter(c => c.archetype === req.key);
-
       if (hasChampion()) sub = sub.filter(c => c.rarity !== 'champion');
 
       const remainingSlots = maxCards - deck.length;
@@ -194,20 +167,16 @@ async function generateDeck() {
       if (take > 0) {
         const non = sub.filter(c => c.rarity !== 'champion');
         const champs = hasChampion() ? [] : sub.filter(c => c.rarity === 'champion');
-
         const pickNon = Math.min(take, non.length);
         const chosen = pickRandom(non, pickNon);
-
         if (chosen.length < take && champs.length > 0) {
-          chosen.push(...pickRandom(champs, 1)); // at most one champ here
+          chosen.push(...pickRandom(champs, 1));
         }
-
         deck.push(...chosen);
         const chosenIds = new Set(chosen.map(x => x.id));
         pool = pool.filter(c => !chosenIds.has(c.id));
-
         if (chosen.some(c => c.rarity === 'champion')) {
-          pool = pool.filter(c => c.rarity !== 'champion'); // purge remaining champs
+          pool = pool.filter(c => c.rarity !== 'champion');
         }
       }
     } else {
@@ -220,7 +189,7 @@ async function generateDeck() {
           deck.push(...chosen);
           const chosenIds = new Set(chosen.map(x => x.id));
           pool = pool.filter(c => !chosenIds.has(c.id));
-          pool = pool.filter(c => c.rarity !== 'champion'); // purge others
+          pool = pool.filter(c => c.rarity !== 'champion');
         }
       } else {
         const subR = pool.filter(c => c.rarity === req.key);
@@ -234,9 +203,8 @@ async function generateDeck() {
     }
   }
 
-  // Fill remaining slots randomly (still max 1 champion)
+  // Fill random
   if (hasChampion()) pool = pool.filter(c => c.rarity !== 'champion');
-
   const remaining = maxCards - deck.length;
   if (remaining > 0) {
     if (pool.length < remaining) {
@@ -247,11 +215,11 @@ async function generateDeck() {
   }
 
   const avg = deck.reduce((s, c) => s + c.elixir, 0) / deck.length;
-
   showError('');
   renderDeck(deck, avg);
 }
 
+// ---- RENDER DECK ----
 function renderDeck(deck, avg) {
   const deckContainer = document.getElementById("deck");
   if (!deckContainer) return;
@@ -263,39 +231,31 @@ function renderDeck(deck, avg) {
   deck.forEach(card => {
     const div = document.createElement("div");
     div.className = `card ${card.rarity}`;
-    div.innerHTML = `
-      <img class="card-img" src="${card.image}" alt="${card.name}">
-    `;
+    div.innerHTML = `<img class="card-img" src="${card.image}" alt="${card.name}">`;
     deckContainer.appendChild(div);
   });
 
-  // Display average elixir
   const avgElixirEl = document.getElementById("avgElixir");
   if (avgElixirEl) avgElixirEl.textContent = `Average elixir cost: ${avg.toFixed(1)}`;
 
-  // Deck link (new format)
   const deckIds = deck.map(c => c.id).join(";");
   const deckLabel = "Royals";
   const deckThumb = "159000000";
   const deckUrl = `https://link.clashroyale.com/en/?clashroyale://copyDeck?deck=${deckIds}&l=${deckLabel}&tt=${deckThumb}`;
 
   const launchBtn = document.getElementById("launchBtn");
-if (launchBtn) {
-  launchBtn.href = deckUrl;
-}
+  if (launchBtn) launchBtn.href = deckUrl;
 }
 
+// ---- BUDGET UI ----
 function updateBudgetUI() {
   const sliders = budgetSliderIds.map(id => document.getElementById(id)).filter(Boolean);
   const values = sliders.map(s => parseInt(s.value, 10));
   const sum = values.reduce((a, v) => a + (v > 0 ? v : 0), 0);
-
   const overBudget = sum > maxCards;
 
   sliders.forEach(s => {
     const isModified = parseInt(s.value, 10) > 0;
-
-    // highlight modified
     if (isModified) {
       s.style.outline = '2px solid #ffb300';
       s.style.boxShadow = '0 0 0 2px #ffb30044';
@@ -303,8 +263,6 @@ function updateBudgetUI() {
       s.style.outline = '';
       s.style.boxShadow = '';
     }
-
-    // lock unmodified if over budget
     s.disabled = overBudget ? !isModified : false;
   });
 
@@ -316,7 +274,7 @@ function updateBudgetUI() {
   }
 }
 
-// attach listeners
+// Attach listeners
 budgetSliderIds.forEach(id => {
   const s = document.getElementById(id);
   if (s) s.addEventListener('input', updateBudgetUI);
@@ -324,10 +282,101 @@ budgetSliderIds.forEach(id => {
 const generateBtn = document.getElementById("generateBtn");
 if (generateBtn) generateBtn.addEventListener("click", generateDeck);
 window.addEventListener('load', updateBudgetUI);
+
+// Auto-generate on load
 window.addEventListener("load", () => {
-  // Only generate deck if not already generated
   const deckContainer = document.getElementById("deck");
   if (deckContainer && deckContainer.children.length === 0) {
     generateDeck();
   }
 });
+
+// ---- MASTERY UI ----
+const masterySlider = document.getElementById("masteryRange");
+const masteryValue = document.getElementById("masteryValue");
+const lookupBtn = document.getElementById("lookupBtn");
+const playerTagInput = document.getElementById("playerTagInput");
+const output = document.getElementById("output");
+const masteryToggle = document.getElementById("masteryToggle");
+const masterySection = document.getElementById("masterySection");
+
+if (masterySlider) masterySlider.disabled = true;
+
+if (masteryToggle && masterySection) {
+  masteryToggle.addEventListener('click', () => {
+    const expanded = masterySection.classList.toggle('hidden');
+    masteryToggle.textContent = expanded ? '▶ Mastery Filter' : '▼ Mastery Filter';
+  });
+}
+
+let lookupCooldown = null;
+if (lookupBtn) {
+  lookupBtn.addEventListener('click', async () => {
+    const tag = (playerTagInput?.value || '').trim();
+    if (!tag) {
+      showError('Please enter player tag.');
+      return;
+    }
+
+    lookupBtn.disabled = true;
+    let seconds = 60;
+    const origText = lookupBtn.textContent;
+    lookupBtn.textContent = `Wait ${seconds}s`;
+    lookupCooldown = setInterval(() => {
+      seconds--;
+      lookupBtn.textContent = seconds > 0 ? `Wait ${seconds}s` : origText;
+      if (seconds <= 0) {
+        clearInterval(lookupCooldown);
+        lookupBtn.disabled = false;
+      }
+    }, 1000);
+
+    try {
+      const res = await fetch(`https://randomdick.vercel.app/api/player?tag=${encodeURIComponent(tag)}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      const masteryData = (data.badges || [])
+        .filter(b => b.name && b.name.startsWith("Mastery"))
+        .map(m => ({
+          name: m.name.replace(/^Mastery/, "").trim(),
+          level: m.level,
+          maxLevel: m.maxLevel,
+          progress: m.progress,
+          target: m.target,
+          icon: m.iconUrls?.large || "",
+        }));
+
+      window.masteryData = masteryData;
+
+      if (!masteryData.length) {
+        output.textContent = "No card masteries found for this player.";
+        window.masteryData = null;
+        if (masterySlider) masterySlider.disabled = true;
+        showError('No card masteries found for this player.');
+        return;
+      }
+
+      if (masterySlider) {
+        masterySlider.disabled = false;
+        masterySlider.value = String(masterySlider.max || 10);
+        masteryValue.textContent = masterySlider.value;
+        masterySlider.oninput = () => {
+          masteryValue.textContent = masterySlider.value;
+        };
+      }
+
+      const header = ["Name", "Level", "MaxLevel", "Progress", "Target"];
+      const rows = masteryData.map(m => [m.name, m.level, m.maxLevel, m.progress, m.target].join('\t'));
+      output.textContent = [header.join('\t'), ...rows].join('\n');
+
+      showError('');
+
+    } catch (err) {
+      output.textContent = "";
+      showError("Error fetching player: " + (err.message || err));
+      window.masteryData = null;
+      if (masterySlider) masterySlider.disabled = true;
+    }
+  });
+}

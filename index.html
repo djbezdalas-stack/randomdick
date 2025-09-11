@@ -1,71 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clash Royale Random Dick Generator</title>
-<link rel="stylesheet" href="style.css">
-<link rel="icon" type="image/png" href="assets/icon_menu_cards.png">
-<meta property="og:image" content="https://djbezdalas-stack.github.io/randomdick/assets/assets/hog_smash_emote.png" />
-<meta name="twitter:image" content="https://djbezdalas-stack.github.io/randomdick/assets/assets/hog_smash_emote.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clash Royale Random Dick Generator</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="assets/icon_menu_cards.png">
+  <meta property="og:image" content="https://djbezdalas-stack.github.io/randomdick/assets/assets/hog_smash_emote.png" />
+  <meta name="twitter:image" content="https://djbezdalas-stack.github.io/randomdick/assets/assets/hog_smash_emote.png" />
 </head>
 <body>
-<div class="app">
-<h1 class="outlined title">
-Clash Royale Random Dick Generator
-<img src="assets/hog_smash_emote.png" alt="Hog Smash Emote" style="height: 2em; vertical-align: bottom; margin-left: 0.4em;">
-</h1>
+  <div class="app">
+    <h1 class="outlined title">
+      Clash Royale Random Dick Generator
+      <img src="assets/hog_smash_emote.png" alt="Hog Smash Emote" style="height: 2em; vertical-align: bottom; margin-left: 0.4em;">
+    </h1>
 
+    <div class="panel">
+      <!-- Controls -->
+      <div class="controls">
+        <!-- Rarity Column -->
+        <div class="slider-col">
+          <h2 class="outlined">Rarity</h2>
+          <div class="slider-group">
+            <label for="commonRange" style="color: var(--cr-common)" class="rarity">
+              Common: <span id="commonValue">Random</span>
+            </label>
+            <input type="range" id="commonRange" min="-1" max="8" value="-1">
+            <div class="slider-gap"></div>
+          </div>
+          <div class="slider-group">
+            <label style="color: var(--cr-rare)" class="rarity">
+              Rare: <span id="rareValue">Random</span>
+            </label>
+            <input type="range" id="rareRange" min="-1" max="8" value="-1">
+            <div class="slider-gap"></div>
+          </div>
+          <div class="slider-group">
+            <label style="color: var(--cr-epic)" class="rarity">
+              Epic: <span id="epicValue">Random</span>
+            </label>
+            <input type="range" id="epicRange" min="-1" max="8" value="-1">
+            <div class="slider-gap"></div>
+          </div>
+          <div class="slider-group">
+            <label class="legendary-animated rarity">
+              Legendary: <span id="legendaryValue">Random</span>
+            </label>
+            <input type="range" id="legendaryRange" min="-1" max="8" value="-1">
+            <div class="slider-gap"></div>
+          </div>
+          <div class="slider-group">
+            <label style="color: var(--cr-champion)" class="rarity">
+              Champion: <span id="championValue">Random</span>
+            </label>
+            <input type="range" id="championRange" min="-1" max="1" value="-1">
+          </div>
+        </div>
 
-<div class="panel">
-<!-- Controls: two-column grid for Rarity + Archetype -->
-<div class="controls">
-<div class="slider-col">
-<h2 class="outlined">Rarity</h2>
-<div class="slider-group">
-<label for="commonRange" style="color: var(--cr-common)" class="rarity">
-Common: <span id="commonValue">Random</span>
-</label>
-<input type="range" id="commonRange" min="-1" max="8" value="-1">
-<div class="slider-gap"></div>
-</div>
-<div class="slider-group">
-<label style="color: var(--cr-rare)" class="rarity">
-Rare: <span id="rareValue">Random</span>
-</label>
-<input type="range" id="rareRange" min="-1" max="8" value="-1">
-<div class="slider-gap"></div>
-</div>
-<div class="slider-group">
-<label style="color: var(--cr-epic)" class="rarity">
-Epic: <span id="epicValue">Random</span>
-</label>
-<input type="range" id="epicRange" min="-1" max="8" value="-1">
-<div class="slider-gap"></div>
-</div>
-<div class="slider-group">
-<label class="legendary-animated rarity">
-Legendary: <span id="legendaryValue">Random</span>
-</label>
-<input type="range" id="legendaryRange" min="-1" max="8" value="-1">
-<div class="slider-gap"></div>
-</div>
-<div class="slider-group">
-<label style="color: var(--cr-champion)" class="rarity">
-Champion: <span id="championValue">Random</span>
-</label>
-<input type="range" id="championRange" min="-1" max="1" value="-1">
-</div>
-</div>
+        <!-- Archetype Column -->
+        <div class="slider-col">
+          <h2 class="outlined">Archetype</h2>
+          <div class="slider-group">
+            <label>
+              Troop: <span id="troopValue">Random</span>
+            </label>
+            <input type="range" id="troopRange" min="-1" max="8" value="-1">
+            <div class="slider-gap"></div>
+          </div>
+          <div class="slider-group">
+            <label>
+              Troop-Air: <span id="troopAirValue">Random</span>
+            </label>
+            <input type="range" id="troopAirRange" min="-1" max="8" value="-1">
+            <div class="slider-gap"></div>
+          </div>
+          <div class="slider-group">
+            <label>
+              Troop-Ground: <span id="troopGroundValue">Random</span>
+            </label>
+            <input type="range" id="troopGroundRange" min="-1" max="8" value="-1">
+            <div class="slider-gap"></div>
+          </div>
+          <div class="slider-group">
+            <label>
+              Spell: <span id="spellValue">Random</span>
+            </label>
+            <input type="range" id="spellRange" min="-1" max="8" value="-1">
+            <div class="slider-gap"></div>
+          </div>
+          <div class="slider-group">
+            <label>
+              Building: <span id="buildingValue">Random</span>
+            </label>
+            <input type="range" id="buildingRange" min="-1" max="8" value="-1">
+          </div>
+        </div>
+      </div><!-- /.controls -->
 
+      <!-- Mastery -->
+      <div class="mastery-col">
+        <h2 class="outlined expandable" id="masteryToggle">▶ Mastery Filter</h2>
+        <div id="masterySection" class="hidden">
+          <div class="slider-group">
+            <label>
+              Maximum Mastery Level: <span id="masteryValue">N/A</span>
+            </label>
+            <input type="range" id="masteryRange" min="0" max="10" value="10" disabled>
+            <small style="color:gray; display:block; margin-top:6px">Fetch player data first</small>
+          </div>
+          <div class="lookup-group">
+            <input type="text" id="playerTagInput" class="styled-input" placeholder="Enter player tag">
+            <button id="lookupBtn" class="action-btn">Lookup Player</button>
+          </div>
+          <pre id="output" class="mastery-output" aria-live="polite"></pre>
+        </div>
+      </div>
 
-<div class="slider-col">
-<h2 class="outlined">Archetype</h2>
-<div class="slider-group">
-<label>
-Troop: <span id="troopValue">Random</span>
-</label>
-<input type="range" id="troopRange" min="-1" max="8" value="-1">
-<div class="slider-gap"></div>
-</div>
+      <!-- Error -->
+      <div id="error" class="error" aria-live="assertive"></div>
+
+      <!-- Buttons and deck -->
+      <button id="generateBtn" class="action-btn">Generate Deck</button>
+      <div id="deck" class="deck"></div>
+
+      <!-- Average Elixir -->
+      <div class="elixir-display">
+        <img src="assets/elixirdrop.png" class="elixir-icon" alt="Elixir" />
+        <span class="elixir-text" id="avgElixir">0.0</span>
+      </div>
+
+      <a id="launchBtn" class="action-btn" href="#" target="_blank">Launch in Clash Royale</a>
+    </div><!-- /.panel -->
+  </div><!-- /.app -->
+
+  <script src="script.js"></script>
+</body>
 </html>

@@ -93,14 +93,21 @@
     </div>
   </div>
   <div class="slider-col">
-  <h2 class="outlined">Mastery (requires player data)</h2>
-  <div class="slider-group">
-    <label>
-      Minimum Mastery Level: <span id="masteryValue">N/A</span>
-    </label>
-    <input type="range" id="masteryRange" min="0" max="10" value="0" disabled>
-    <small style="color:gray;">Fetch player data first</small>
+  <h2 class="outlined expandable" id="masteryToggle">▶ Mastery Filter</h2>
+  <div id="masterySection" class="hidden">
+    <div class="slider-group">
+      <label>
+        Maximum Mastery Level: <span id="masteryValue">N/A</span>
+      </label>
+      <input type="range" id="masteryRange" min="0" max="10" value="10" disabled>
+      <small style="color:gray;">Fetch player data first</small>
+    </div>
+    <div class="lookup-group">
+      <input type="text" id="playerTagInput" class="styled-input" placeholder="Enter player tag">
+      <button id="lookupBtn" class="action-btn">Lookup Player</button>
+    </div>
   </div>
+</div>
 </div>
 </div>
   <button id="generateBtn" class="action-btn">Generate Deck</button>
@@ -132,9 +139,12 @@
 <script>
   const lookupBtn = document.getElementById("lookupBtn");
   const output = document.getElementById("output");
-  const masterySlider = document.getElementById("masteryRange");
-  const masteryValue = document.getElementById("masteryValue");
-
+  const masteryToggle = document.getElementById("masteryToggle");
+  const masterySection = document.getElementById("masterySection");
+  masteryToggle.addEventListener("click", () => {
+    const expanded = masterySection.classList.toggle("hidden");
+    masteryToggle.textContent = expanded ? "▶ Mastery Filter" : "▼ Mastery Filter";
+  });
   let masteryData = null; // cache from API
   let lookupCooldown = null;
 
@@ -171,7 +181,7 @@
           icon: m.iconUrls?.large || "",
         }));
         window.masteryData = masteryData; // cache globally for deck generator
-        
+
       if (!masteryData.length) {
         output.textContent = "No card masteries found for this player.";
         masteryData = null;

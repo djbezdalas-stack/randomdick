@@ -235,3 +235,10 @@ a.action-btn:hover {
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+.hidden { display: none; }
+.styled-input {
+  border-radius: 12px;
+  font-family: inherit;
+  padding: 6px 10px;
+  font-size: 1em;
+}

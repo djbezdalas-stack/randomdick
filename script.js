@@ -140,6 +140,19 @@ async function generateDeck() {
   let deck = [];
   const hasChampion = () => deck.some(c => c.rarity === 'champion');
 
+ const maxMastery = Number(document.getElementById("masteryRange")?.value || 10);
+  if (maxMastery < 10) {
+  if (!window.masteryData) {
+    showError("Mastery filters require fetching player data first!");
+    return;
+  }
+  pool = pool.filter(c => {
+    if (!c.masteryName) return false;
+    const m = window.masteryData.find(m => m.name === c.masteryName);
+    return m && m.level <= maxMastery;
+  });
+  }
+
   // Exclude sliders set to 0
   for (const [rarity, v] of Object.entries(rarityValues)) {
     if (v === 0) pool = pool.filter(c => c.rarity !== rarity);

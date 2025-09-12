@@ -342,20 +342,21 @@ if (lookupBtn) {
 
   const masteryBadges = (data.badges || []).filter(b => b.name && b.name.startsWith("Mastery"));
 
-  const masteryData = masteryBadges.map(m => {
-  const card = allCards.find(c => c.masteryName === m.name);
+const masteryData = masteryBadges.map(m => {
+  const badgeName = m.name.replace(/^Mastery\s*/, "").replace(/^Mastery/, "").trim(); // remove prefix
+  const card = allCards.find(c => c.masteryName === badgeName);
 
   if (!card) {
-    console.error(`[Mastery mapping error] No CSV entry for badge: "${m.name}"`);
+    console.error(`[Mastery mapping error] No CSV entry for badge: "${badgeName}"`);
   }
 
   return {
-    name: card ? card.name : m.name.replace(/^Mastery\s*/, "").trim(),
+    name: card ? card.name : badgeName,
     level: Number(m.level ?? 0),
     maxLevel: Number(m.maxLevel ?? 0),
     matched: !!card
   };
-  });
+});
 
   window.masteryData = masteryData;
 

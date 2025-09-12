@@ -102,16 +102,16 @@
       <div class="mastery-col">
         <h2 class="outlined expandable" id="masteryToggle">▶ Mastery Filter</h2>
         <div id="masterySection" class="hidden">
+          <div class="lookup-group">
+            <input type="text" id="playerTagInput" class="styled-input" placeholder="Enter player tag">
+            <button id="lookupBtn" class="action-btn">Lookup Player</button>
+          </div>
           <div class="slider-group">
             <label>
               Maximum Mastery Level: <span id="masteryValue">N/A</span>
             </label>
             <input type="range" id="masteryRange" min="0" max="10" value="10" disabled>
             <small style="color:gray; display:block; margin-top:6px">Fetch player data first</small>
-          </div>
-          <div class="lookup-group">
-            <input type="text" id="playerTagInput" class="styled-input" placeholder="Enter player tag">
-            <button id="lookupBtn" class="action-btn">Lookup Player</button>
           </div>
           <pre id="output" class="mastery-output" aria-live="polite"></pre>
         </div>

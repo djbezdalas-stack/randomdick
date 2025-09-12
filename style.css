@@ -286,12 +286,6 @@ a.action-btn:hover {
   button, a.action-btn { font-size: 16px; padding: 10px; }
 }
 
-.success {
-  color: #7CFC00; /* bright green */
-  margin-top: 6px;
-  font-weight: bold;
-}
-
 .mastery-output {
   font-family: monospace;
   white-space: pre;
@@ -301,4 +295,33 @@ a.action-btn:hover {
   border-radius: 6px;
   max-height: 180px;
   overflow-y: auto;
+}
+
+/* Make rarity and archetype rows consistent */
+.slider-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 40px; /* ensures equal row height */
+}
+
+/* Input + button inline */
+.lookup-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.lookup-group input {
+  flex: 2; /* ~65% */
+}
+.lookup-group button {
+  flex: 1; /* ~35% */
+}
+
+/* Success message style */
+.success {
+  color: #7CFC00;
+  margin-top: 6px;
+  font-weight: bold;
 }

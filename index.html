@@ -106,13 +106,13 @@
             <input type="text" id="playerTagInput" class="styled-input" placeholder="Enter player tag">
             <button id="lookupBtn" class="action-btn">Lookup Player</button>
           </div>
-          
+
           <div class="slider-group">
             <label>
               Maximum Mastery Level: <span id="masteryValue">N/A</span>
             </label>
             <input type="range" id="masteryRange" min="0" max="10" value="10" disabled>
-            <small style="color:gray; display:block; margin-top:6px">Fetch player data first</small>
+            <small id="masteryStatus" style="color:gray; display:block; margin-top:6px">Fetch player data first</small>
           </div>
           <pre id="output" class="mastery-output" aria-live="polite"></pre>
         </div>

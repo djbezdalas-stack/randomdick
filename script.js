@@ -342,8 +342,8 @@ if (lookupBtn) {
 
   const masteryBadges = (data.badges || []).filter(b => b.name && b.name.startsWith("Mastery"));
 
-const masteryData = masteryBadges.map(m => {
-  const badgeName = m.name.replace(/^Mastery\s*/, "").replace(/^Mastery/, "").trim(); // remove prefix
+  const masteryData = masteryBadges.map(m => {
+  const badgeName = m.name.replace(/^Mastery\s*/, "").replace(/^Mastery/, "").trim();
   const card = allCards.find(c => c.masteryName === badgeName);
 
   if (!card) {
@@ -386,12 +386,11 @@ const masteryData = masteryBadges.map(m => {
   });
   output.textContent = [header.join(" | "), ...rows].join("\n");
 
-  const fetchHint = document.getElementById("fetchHint");
-  if (fetchHint) {
-    fetchHint.textContent = "Player data successfully fetched!";
-    fetchHint.className = "success";
-  }
-  showError('');
+  const statusEl = document.getElementById("masteryStatus");
+  if (statusEl) {
+  statusEl.textContent = "Fetch successful!";
+  statusEl.classList.add("success"); // green text stays
+}
 
 } catch (err) {
   output.textContent = "";

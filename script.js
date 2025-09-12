@@ -125,10 +125,10 @@ async function generateDeck() {
       return;
     }
     pool = pool.filter(c => {
-      if (!c.masteryName) return false;
-      const m = window.masteryData.find(mm => mm.name === c.masteryName);
-      return m && m.level <= maxMastery;
-    });
+  const m = window.masteryData.find(mm => mm.name === c.name);
+  const lvl = m ? m.level : 0; // unmapped = level 0
+  return lvl <= maxMastery;
+});
   }
 
   // Exclude 0
@@ -332,51 +332,60 @@ if (lookupBtn) {
     }, 1000);
 
     try {
-      const res = await fetch(`https://randomdick.vercel.app/api/player?tag=${encodeURIComponent(tag)}`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
+  const res = await fetch(`https://randomdick.vercel.app/api/player?tag=${encodeURIComponent(tag)}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
 
-      const masteryData = (data.badges || [])
-        .filter(b => b.name && b.name.startsWith("Mastery"))
-        .map(m => ({
-          name: m.name.replace(/^Mastery/, "").trim(),
-          level: m.level,
-          maxLevel: m.maxLevel,
-          progress: m.progress,
-          target: m.target,
-          icon: m.iconUrls?.large || "",
-        }));
+  // Map mastery data
+  const masteryData = (data.badges || [])
+    .filter(b => b.name && b.name.startsWith("Mastery"))
+    .map(m => {
+      // Match masteryName to real card name
+      const card = window.allCards?.find(c => c.masteryName === m.name);
+      return {
+        name: card ? card.name : m.name.replace(/^Mastery/, "").trim(),
+        level: m.level ?? 0,
+        maxLevel: m.maxLevel ?? 0
+      };
+    });
 
-      window.masteryData = masteryData;
+  window.masteryData = masteryData;
 
-      if (!masteryData.length) {
-        output.textContent = "No card masteries found for this player.";
-        window.masteryData = null;
-        if (masterySlider) masterySlider.disabled = true;
-        showError('No card masteries found for this player.');
-        return;
-      }
+  if (!masteryData.length) {
+    output.textContent = "No card masteries found for this player.";
+    window.masteryData = null;
+    if (masterySlider) masterySlider.disabled = true;
+    showError('No card masteries found for this player.');
+    return;
+  }
 
-      if (masterySlider) {
-        masterySlider.disabled = false;
-        masterySlider.value = String(masterySlider.max || 10);
-        masteryValue.textContent = masterySlider.value;
-        masterySlider.oninput = () => {
-          masteryValue.textContent = masterySlider.value;
-        };
-      }
+  if (masterySlider) {
+    masterySlider.disabled = false;
+    masterySlider.value = String(masterySlider.max || 10);
+    masteryValue.textContent = masterySlider.value;
+    masterySlider.oninput = () => {
+      masteryValue.textContent = masterySlider.value;
+    };
+  }
 
-      const header = ["Name", "Level", "MaxLevel", "Progress", "Target"];
-      const rows = masteryData.map(m => [m.name, m.level, m.maxLevel, m.progress, m.target].join('\t'));
-      output.textContent = [header.join('\t'), ...rows].join('\n');
+  // Format output into aligned columns
+  const header = ["Name", "Level", "Max"];
+  const rows = masteryData.map(m =>
+    `${m.name.padEnd(20)} ${String(m.level).padStart(2)} / ${m.maxLevel}`
+  );
+  output.textContent = [header.join(" | "), ...rows].join("\n");
 
-      showError('');
+  // ✅ Success message
+  output.insertAdjacentHTML("beforebegin",
+    `<div class="success">Player data successfully fetched!</div>`);
 
-    } catch (err) {
-      output.textContent = "";
-      showError("Error fetching player: " + (err.message || err));
-      window.masteryData = null;
-      if (masterySlider) masterySlider.disabled = true;
-    }
+  showError('');
+
+} catch (err) {
+  output.textContent = "";
+  showError("Error fetching player: " + (err.message || err));
+  window.masteryData = null;
+  if (masterySlider) masterySlider.disabled = true;
+}
   });
 }

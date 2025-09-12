@@ -285,3 +285,20 @@ a.action-btn:hover {
   .deck { grid-template-columns: repeat(2, 1fr); gap: 6px; }
   button, a.action-btn { font-size: 16px; padding: 10px; }
 }
+
+.success {
+  color: #7CFC00; /* bright green */
+  margin-top: 6px;
+  font-weight: bold;
+}
+
+.mastery-output {
+  font-family: monospace;
+  white-space: pre;
+  display: block;
+  background: rgba(255,255,255,0.05);
+  padding: 8px;
+  border-radius: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+}

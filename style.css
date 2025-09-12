@@ -297,26 +297,36 @@ a.action-btn:hover {
   overflow-y: auto;
 }
 
-/* Make rarity and archetype rows consistent */
 .slider-group {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 40px; /* ensures equal row height */
+  flex-direction: column; /* stack label+value and slider */
+  gap: 2px;
+  margin-bottom: 8px;
 }
 
-/* Input + button inline */
+.slider-group label {
+  display: flex;
+  justify-content: space-between; /* text left, value right */
+  width: 100%;
+}
+.slider-group label span {
+  text-align: right;
+  flex-shrink: 0;
+}
+
 .lookup-group {
   display: flex;
   gap: 8px;
   margin-top: 8px;
+  align-items: center;
 }
 .lookup-group input {
-  flex: 2; /* ~65% */
+  flex: 1; /* ~34% */
+  padding: 6px 10px; /* slim vertical */
+  font-size: 0.9em;
 }
 .lookup-group button {
-  flex: 1; /* ~35% */
+  flex: 2; /* ~66% */
 }
 
 /* Success message style */

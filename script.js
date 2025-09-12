@@ -343,18 +343,18 @@ if (lookupBtn) {
   const masteryBadges = (data.badges || []).filter(b => b.name && b.name.startsWith("Mastery"));
 
   const masteryData = masteryBadges.map(m => {
-    const card = allCards.find(c => c.masteryName === m.name);
+  const card = allCards.find(c => c.masteryName === m.name);
 
-    if (!card) {
-      console.error(`[Mastery mapping error] No CSV entry for badge: "${m.name}"`);
-    }
+  if (!card) {
+    console.error(`[Mastery mapping error] No CSV entry for badge: "${m.name}"`);
+  }
 
-    return {
-      cardName: card ? card.name : m.name.replace(/^Mastery\s*/, "").trim(),
-      level: Number(m.level ?? 0),
-      maxLevel: Number(m.maxLevel ?? 0),
-      matched: !!card
-    };
+  return {
+    name: card ? card.name : m.name.replace(/^Mastery\s*/, "").trim(),
+    level: Number(m.level ?? 0),
+    maxLevel: Number(m.maxLevel ?? 0),
+    matched: !!card
+  };
   });
 
   window.masteryData = masteryData;
@@ -378,15 +378,18 @@ if (lookupBtn) {
 
   // Format output into aligned columns
   const header = ["Name", "Level", "Max"];
-  const rows = masteryData.map(m =>
-    `${m.name.padEnd(20)} ${String(m.level).padStart(2)} / ${m.maxLevel}`
-  );
+  const rows = masteryData.map(m => {
+  const n = (m.name || "???");
+  const safeName = n.length > 20 ? n.slice(0,17) + "..." : n;
+  return `${safeName.padEnd(20)} ${String(m.level).padStart(2)} / ${m.maxLevel}`;
+  });
   output.textContent = [header.join(" | "), ...rows].join("\n");
 
-  // ✅ Success message
-  output.insertAdjacentHTML("beforebegin",
-    `<div class="success">Player data successfully fetched!</div>`);
-
+  const fetchHint = document.getElementById("fetchHint");
+  if (fetchHint) {
+    fetchHint.textContent = "Player data successfully fetched!";
+    fetchHint.className = "success";
+  }
   showError('');
 
 } catch (err) {
